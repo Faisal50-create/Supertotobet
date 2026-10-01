@@ -6,4 +6,4 @@ Disallow: /admin/
 Disallow: /drafts/
 Disallow: /demo/
 
-Sitemap: https://dazcfutboltv.me/sitemap.xml
+Sitemap: http://localhost:1313/sitemap.xml

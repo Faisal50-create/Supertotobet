@@ -1,4 +1,4 @@
-baseURL = "https://dazcfutboltv.me/"
+baseURL = "https://supertotobet.online/"
 languageCode = "tr"
 title = "SuperTotoBet Giriş 2026 – Güncel Adres ve SuperTotoBet Bilgileri"
 theme = "Mango"
@@ -7,9 +7,9 @@ googleAnalytics = "G-WZQZBP2ZCL"
 
 [params]
   description = "SuperTotoBet giriş adresi ve platform hakkında güncel bilgiler. Spor bahisleri, canlı bahis, casino, mobil uygulama, promosyonlar ve SuperTotoBet özelliklerini inceleyin."
-  author = "DazcFutbolTV"
-  copyright = "© 2024 DazcFutbolTV. All Rights Reserved."
-  keywords = ["DazcFutbolTV", "dazcfutbolios", "DazcFutboltv App", "calendarios de fútbol", "Partidos de futbol", "resultados deportivos", "noticias de fútbol"]
+  author = "Tim Mirroman"
+  copyright = "© 2026 SuperTotoBet Giriş 2026 – Güncel Adres ve SuperTotoBet Bilgileri. Her hakkı saklıdır."
+  keywords = ["supertotobet", "süpertotobet", "supertotobet giriş", "supertotobet güncel giriş", "süper toto bet"]
 
   logo = "/images/logo.png"
   favicon = "/favicon.ico"
@@ -26,29 +26,34 @@ unsafe = true
 
 # Menus
 [[menu.main]]
-  identifier = "home"
-  name = "Home"
+  identifier = "SuperTotoBet"
+  name = "SuperTotoBet"
   url = "/"
   weight = 1
 
 [[menu.main]]
-  identifier = "matches"
-  name = "Live Matches"
-  url = "/matches/"
+  identifier = "SuperTotoBet Giriş"
+  name = "SuperTotoBet Giriş"
+  url = "https://600supertotobet.com/#login/"
   weight = 2
 
 [[menu.main]]
-  identifier = "blog"
-  name = "Blog"
-  url = "/blog/"
+  identifier = "kayıt olmak"
+  name = "kayıt olmak"
+  url = "https://600supertotobet.com/#registration/"
   weight = 3
 
 [[menu.main]]
-  identifier = "about"
-  name = "About"
+  identifier = "hakkında"
+  name = "hakkında"
   url = "/about/"
   weight = 4
 
+[[menu.main]]
+  identifier = "Iletişim"
+  name = "Iletişim"
+  url = "/Contact/"
+  weight = 5
 # Footer
 [[menu.footer]]
   name = "Privacy Policy"
