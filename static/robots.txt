@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /drafts/
 
-Sitemap: {{ .Site.BaseURL }}sitemap.xml
+Sitemap: https://supertotobet.online/sitemap.xml

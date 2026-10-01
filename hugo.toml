@@ -2,8 +2,7 @@ baseURL = "https://supertotobet.online/"
 languageCode = "tr"
 title = "SuperTotoBet Giriş 2026 – Güncel Adres ve SuperTotoBet Bilgileri"
 theme = "Mango"
-enableRobotsTXT = true
-googleAnalytics = "G-WZQZBP2ZCL"
+enableRobotsTXT = false
 
 [params]
   description = "SuperTotoBet giriş adresi ve platform hakkında güncel bilgiler. Spor bahisleri, canlı bahis, casino, mobil uygulama, promosyonlar ve SuperTotoBet özelliklerini inceleyin."
@@ -66,9 +65,6 @@ unsafe = true
 [[menu.footer]]
   name = "Contact"
   url = "/contact/"
-
-[services.googleAnalytics]
-  ID = "G-XXXXXXXXXX"
 
 # Sitemap
 [sitemap]

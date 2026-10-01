@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /drafts/
 
-Sitemap: http://localhost:1313/sitemap.xml
+Sitemap: https://supertotobet.online/sitemap.xml
