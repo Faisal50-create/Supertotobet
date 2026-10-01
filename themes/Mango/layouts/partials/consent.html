@@ -1,0 +1,147 @@
+<!-- layouts/partials/consent.html -->
+<div id="consent-banner" class="consent-banner hidden" aria-hidden="true" role="dialog" aria-live="polite">
+  <div class="consent-inner">
+    <div class="consent-text">
+      <strong id="consent-title">We use cookies and process data</strong>
+      <p id="consent-desc">
+        We use cookies and process data to provide essential site functionality, personalize content and ads,
+        measure ad performance, and improve your experience. By choosing "Consent" you agree to this processing.
+      </p>
+    </div>
+
+    <div class="consent-actions">
+      <button id="btn-consent" class="btn primary">Consent</button>
+      <button id="btn-deny" class="btn neutral">Do not consent</button>
+      <button id="btn-manage" class="btn link">Manage options</button>
+    </div>
+
+    <div id="consent-manage-panel" class="manage-panel hidden" aria-hidden="true">
+      <h4>Manage your preferences</h4>
+      <label><input type="checkbox" id="pref-essential" disabled checked> Essential (required)</label><br>
+      <label><input type="checkbox" id="pref-personalize"> Personalize ads & content</label><br>
+      <label><input type="checkbox" id="pref-analytics"> Analytics & performance</label><br>
+      <div class="manage-actions">
+        <button id="btn-save-prefs" class="btn primary">Save preferences</button>
+        <button id="btn-cancel-prefs" class="btn neutral">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Minimal CSS (you can move to assets/css/site.css) -->
+<style>
+.consent-banner { position: fixed; right: 18px; left: 18px; bottom: 18px; z-index: 9999; display:flex; justify-content:center; }
+.consent-inner { max-width: 980px; width:100%; background:#fff; border-radius:10px; box-shadow:0 6px 24px rgba(0,0,0,0.12); padding:16px; display:flex; gap:16px; align-items:center; }
+.consent-text { flex:1; color:#2c3e50; }
+.consent-text p { margin-top:6px; color:#556; font-size:0.95rem; }
+.consent-actions { display:flex; gap:8px; align-items:center; }
+.btn { padding:8px 12px; border-radius:8px; border:1px solid #d0d7de; background:#fff; cursor:pointer; font-weight:600; }
+.btn.primary { background:#1f6feb; color:#fff; border-color:transparent; }
+.btn.neutral { background:#f1f5f9; }
+.btn.link { background:transparent; color:#1f6feb; border:0; text-decoration:underline; padding:6px 8px; }
+.hidden { display:none !important; }
+.manage-panel { margin-top:12px; padding-top:12px; border-top:1px solid #eee; }
+.manage-actions { margin-top:10px; display:flex; gap:8px; }
+@media (max-width:720px){ .consent-inner{flex-direction:column; align-items:stretch;} .consent-actions{justify-content:flex-end;} }
+</style>
+
+<!-- JS: you can move to assets/js/consent.js and include in footer -->
+<script>
+(function(){
+  const BANNER = document.getElementById('consent-banner');
+  const BTN_CONSENT = document.getElementById('btn-consent');
+  const BTN_DENY = document.getElementById('btn-deny');
+  const BTN_MANAGE = document.getElementById('btn-manage');
+  const MANAGE_PANEL = document.getElementById('consent-manage-panel');
+  const BTN_SAVE = document.getElementById('btn-save-prefs');
+  const BTN_CANCEL = document.getElementById('btn-cancel-prefs');
+
+  const PREF_PERSONALIZE = document.getElementById('pref-personalize');
+  const PREF_ANALYTICS = document.getElementById('pref-analytics');
+
+  const STORAGE_KEY = 'site_user_consent_v1';
+
+  // default texts (EN) - you can set data attributes to change language
+  function showBanner() {
+    BANNER.classList.remove('hidden');
+    BANNER.setAttribute('aria-hidden', 'false');
+  }
+  function hideBanner() {
+    BANNER.classList.add('hidden');
+    BANNER.setAttribute('aria-hidden', 'true');
+  }
+
+  function loadConsent() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch(e) { return null; }
+  }
+
+  function saveConsent(obj) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+    // set global signal and attribute for other scripts
+    window.userConsent = obj;
+    document.documentElement.setAttribute('data-user-consent', obj.status || 'unknown');
+    // fire event so ad scripts can pick it up
+    window.dispatchEvent(new CustomEvent('consentChanged', { detail: obj }));
+  }
+
+  function applyConsent(obj) {
+    // hide banner
+    hideBanner();
+    // save
+    saveConsent(obj);
+    // Example: if you want to load ads only after consent:
+    if (obj.personalize || obj.analytics) {
+      // call a function to init ads/analytics
+      if (typeof initAds === 'function') initAds(obj);
+    }
+  }
+
+  // UI handlers
+  BTN_CONSENT.addEventListener('click', function(){
+    // default: consent to all optional categories
+    const obj = { status:'consent', timestamp: Date.now(), personalize:true, analytics:true };
+    applyConsent(obj);
+  });
+  BTN_DENY.addEventListener('click', function(){
+    const obj = { status:'deny', timestamp: Date.now(), personalize:false, analytics:false };
+    applyConsent(obj);
+  });
+  BTN_MANAGE.addEventListener('click', function(){
+    MANAGE_PANEL.classList.toggle('hidden');
+  });
+  BTN_SAVE.addEventListener('click', function(){
+    const obj = {
+      status: (PREF_PERSONALIZE.checked || PREF_ANALYTICS.checked) ? 'partial' : 'deny',
+      timestamp: Date.now(),
+      personalize: !!PREF_PERSONALIZE.checked,
+      analytics: !!PREF_ANALYTICS.checked
+    };
+    applyConsent(obj);
+  });
+  BTN_CANCEL.addEventListener('click', function(){
+    MANAGE_PANEL.classList.add('hidden');
+  });
+
+  // On load: check saved consent
+  const existing = loadConsent();
+  if (existing) {
+    // set global state and apply (but do not show banner)
+    window.userConsent = existing;
+    document.documentElement.setAttribute('data-user-consent', existing.status || 'unknown');
+    window.dispatchEvent(new CustomEvent('consentLoaded', { detail: existing }));
+  } else {
+    // show banner for EEA/UK/CH visitors only ideally.
+    // For simplicity we show to everyone; you can integrate geo-check server-side.
+    showBanner();
+  }
+
+  // Expose helper to open manage panel programmatically
+  window.openConsentManager = function(){ MANAGE_PANEL.classList.remove('hidden'); showBanner(); };
+
+})();
+</script>

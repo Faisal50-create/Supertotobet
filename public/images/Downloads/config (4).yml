@@ -1,0 +1,61 @@
+backend:
+  name: git-gateway
+  branch: main
+local_backend: true
+
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "post"
+    label: "Posts"
+    folder: "content/post"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Author", name: "author", widget: "relation", collection: "authors", search_fields: ["name"], value_field: "name", display_fields: ["name"] }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "authors"
+    label: "Authors"
+    folder: "content/authors"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Bio", name: "bio", widget: "text" }
+      - { label: "Image", name: "image", widget: "image" }
+
+# SEO Group
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        collapsed: false
+        fields:
+          - { label: "SEO Title", name: "title", widget: "seoTitle", required: false }
+          - { label: "Meta Description", name: "description", widget: "seoDescription", required: false }
+          - { label: "LSI Keywords", name: "lsi_keywords", widget: "list", required: false, hint: "Related/semantic keywords" }
+          - label: "Featured Image"
+            name: "featured_image"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Image", name: "src", widget: "image", required: false }
+              - { label: "Alt", name: "alt", widget: "string", required: false }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
+          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }
+          - { label: "Noindex this page?", name: "noindex", widget: "boolean", default: false, required: false }
+          - { label: "Schema Type", name: "schema_type", widget: "select", options: ["Article", "BlogPosting", "NewsArticle"], default: "Article", required: false }
+          - label: "FAQ (for FAQPage Schema)"
+            name: "faq"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer (HTML allowed)", name: "answer", widget: "text" }
+
+      - { label: "Body", name: "body", widget: "markdown" }
