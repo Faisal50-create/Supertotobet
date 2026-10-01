@@ -1,6 +1,7 @@
 ---
 title: SuperTotoBet Bahis Kuralları
 date: 2026-10-01T05:04:58.501Z
+featured_image: /uploads/supertotobet-bahis-kurallar-30kb.jpeg
 categories:
   - Supertotobet
 seo_title: "SuperTotoBet Bahis Kuralları: Kupon Öncesi Bilmeniz Gerekenler"
@@ -20,6 +21,8 @@ Bu rehberde SuperTotoBet'in yayımladığı spor bahis kurallarını uzun bir ş
 **Kaynak:** SuperTotoBet tarafından yayımlanan Spor Bahis Kurallar
 
 ## SuperTotoBet Bahis Kuralları Neden Önemli?
+
+![SuperTotoBet Bahis Kuralları](/uploads/supertotobet-bahis-kurallar-30kb.jpeg)
 
 Birçok kullanıcı bahis kurallarını ancak kuponuyla ilgili bir sorun yaşadıktan sonra okumaya başlıyor. Oysa özellikle şu durumlarda kurallar sonucu değiştirebilir:
 

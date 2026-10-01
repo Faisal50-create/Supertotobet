@@ -1,7 +1,7 @@
 <div class="tv-channels-section" itemscope itemtype="https://schema.org/ItemList">
   <h2 class="section-title" itemprop="name">Vistas previas del partido</h2>
   
-  {{ $tvChannels := .Site.RegularPages }}
+  {{ $tvChannels := where .Site.RegularPages "Section" "blog" }}
   
   <div class="tv-channels-grid" id="tvChannelsGrid">
     {{ range $index, $item := $tvChannels }}
